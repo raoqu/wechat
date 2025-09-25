@@ -1,8 +1,8 @@
 package device
 
 import (
-	"github.com/chanxuehong/wechat/internal/util"
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/internal/util"
+	"main/mp/core"
 )
 
 // 设备标识

@@ -1,7 +1,7 @@
 package media
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 type Article struct {

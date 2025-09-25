@@ -13,8 +13,8 @@ import (
 
 	"github.com/chanxuehong/util"
 
-	"github.com/chanxuehong/wechat/internal/debug/mch/api"
-	wechatutil "github.com/chanxuehong/wechat/util"
+	"main/internal/debug/mch/api"
+	wechatutil "main/util"
 )
 
 type Client struct {

@@ -8,7 +8,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 // jsapi_ticket 中控服务器接口.

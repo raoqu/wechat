@@ -1,7 +1,7 @@
 package code
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 // 核销Code接口.

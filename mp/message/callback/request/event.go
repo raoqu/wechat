@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 const (

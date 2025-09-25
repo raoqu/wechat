@@ -1,7 +1,7 @@
 package statistics
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 type Statistics struct {

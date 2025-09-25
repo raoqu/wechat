@@ -1,7 +1,7 @@
 package qrcode
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 type TempQrcode struct {

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/chanxuehong/wechat/util"
+	"main/util"
 )
 
 type Client struct {

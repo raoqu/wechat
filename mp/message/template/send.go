@@ -3,7 +3,7 @@ package template
 import (
 	"encoding/json"
 
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 type TemplateMessage struct {

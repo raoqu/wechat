@@ -1,7 +1,7 @@
 package poi
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 type Poi struct {

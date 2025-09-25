@@ -1,7 +1,7 @@
 package meetingticket
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 type UpdateUserParameters struct {

@@ -1,4 +1,4 @@
-module github.com/chanxuehong/wechat
+module main
 
 go 1.15
 

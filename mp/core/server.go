@@ -19,8 +19,8 @@ import (
 
 	"github.com/chanxuehong/util/security"
 
-	"github.com/chanxuehong/wechat/internal/debug/callback"
-	"github.com/chanxuehong/wechat/internal/util"
+	"main/internal/debug/callback"
+	"main/internal/util"
 )
 
 // Server 用于处理微信服务器的回调请求, 并发安全!

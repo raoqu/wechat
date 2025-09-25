@@ -1,5 +1,4 @@
 # wechat SDK for golang
-https://github.com/chanxuehong/wechat
 
 ## 简介
 | 模块  | 描述                     |

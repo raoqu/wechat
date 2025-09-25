@@ -1,7 +1,7 @@
 package mass2users
 
 import (
-	"github.com/chanxuehong/wechat/mp/core"
+	"main/mp/core"
 )
 
 const (
