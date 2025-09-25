@@ -28,4 +28,6 @@ Thumbs.db
 .idea/
 *.iml
 main
-main.go
+local.go
+stackguid
+deploy.sh
