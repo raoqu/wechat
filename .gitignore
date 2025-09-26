@@ -29,5 +29,5 @@ Thumbs.db
 *.iml
 main
 local.go
-stackguid
+stackguide
 deploy.sh

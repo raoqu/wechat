@@ -10,15 +10,6 @@ import (
 	"main/mp/message/callback/response"
 )
 
-const (
-	wxAppId     = "appid"
-	wxAppSecret = "appsecret"
-
-	wxOriId         = "oriid"
-	wxToken         = "token"
-	wxEncodedAESKey = "aeskey"
-)
-
 var (
 	// 下面两个变量不一定非要作为全局变量, 根据自己的场景来选择.
 	msgHandler core.Handler
@@ -36,20 +27,6 @@ func init() {
 	msgServer = core.NewServer(wxOriId, wxAppId, wxToken, wxEncodedAESKey, msgHandler, nil)
 }
 
-func textMsgHandler(ctx *core.Context) {
-	log.Printf("收到文本消息:\n%s\n", ctx.MsgPlaintext)
-
-	msg := request.GetText(ctx.MixedMsg)
-	resp := response.NewText(msg.FromUserName, msg.ToUserName, msg.CreateTime, msg.Content)
-	//ctx.RawResponse(resp) // 明文回复
-	ctx.AESResponse(resp, 0, "", nil) // aes密文回复
-}
-
-func defaultMsgHandler(ctx *core.Context) {
-	log.Printf("收到消息:\n%s\n", ctx.MsgPlaintext)
-	ctx.NoneResponse()
-}
-
 func menuClickEventHandler(ctx *core.Context) {
 	log.Printf("收到菜单 click 事件:\n%s\n", ctx.MsgPlaintext)
 
@@ -59,13 +36,14 @@ func menuClickEventHandler(ctx *core.Context) {
 	ctx.AESResponse(resp, 0, "", nil) // aes密文回复
 }
 
-func defaultEventHandler(ctx *core.Context) {
-	log.Printf("收到事件:\n%s\n", ctx.MsgPlaintext)
-	ctx.NoneResponse()
-}
-
 func init() {
-	http.HandleFunc("/wx_callback", wxCallbackHandler)
+	http.HandleFunc("/wx_notify", wxCallbackHandler)
+
+	// 登录相关
+	http.HandleFunc("/auth/url", AuthURL)           // 返回微信授权链接
+	http.HandleFunc("/auth/callback", AuthCallback) // 微信回调
+	http.HandleFunc("/auth/me", Me)                 // 已登录用户信息示例
+
 }
 
 // wxCallbackHandler 是处理回调请求的 http handler.
@@ -76,5 +54,5 @@ func wxCallbackHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	log.Println(http.ListenAndServe(":80", nil))
+	log.Println(http.ListenAndServe(":7666", nil))
 }
