@@ -8,12 +8,15 @@ import (
 	"main/mp/menu"
 	"main/mp/message/callback/request"
 	"main/mp/message/callback/response"
+
+	"github.com/raoqu/gojs"
 )
 
 var (
 	// 下面两个变量不一定非要作为全局变量, 根据自己的场景来选择.
 	msgHandler core.Handler
 	msgServer  *core.Server
+	GOJS       *gojs.GoJSInstance
 )
 
 func init() {
@@ -24,7 +27,7 @@ func init() {
 	mux.EventHandleFunc(menu.EventTypeClick, menuClickEventHandler)
 
 	msgHandler = mux
-	msgServer = core.NewServer(wxOriId, wxAppId, wxToken, wxEncodedAESKey, msgHandler, nil)
+	msgServer = core.NewServer(CONFIG.OriID, CONFIG.AppID, CONFIG.Token, CONFIG.EncodedAESKey, msgHandler, nil)
 }
 
 func menuClickEventHandler(ctx *core.Context) {
@@ -39,7 +42,7 @@ func menuClickEventHandler(ctx *core.Context) {
 func init() {
 	http.HandleFunc("/wx_notify", wxCallbackHandler)
 
-	// 登录相关
+	// WebApp 登录相关
 	http.HandleFunc("/auth/url", AuthURL)           // 返回微信授权链接
 	http.HandleFunc("/auth/callback", AuthCallback) // 微信回调
 	http.HandleFunc("/auth/me", Me)                 // 已登录用户信息示例
@@ -54,5 +57,11 @@ func wxCallbackHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	log.Println(http.ListenAndServe(":7666", nil))
+	jsConfig := gojs.LoadConfig("gojs.yaml")
+	GOJS := gojs.CreateInstance(jsConfig)
+	GOJS.Run()
+	go func() {
+		http.ListenAndServe(CONFIG.ServerAddr, nil)
+	}()
+	select {}
 }

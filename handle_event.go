@@ -19,5 +19,5 @@ func defaultEventHandler(ctx *core.Context) {
 
 func dealSubscribe(ctx *core.Context) {
 	log.Printf("收到订阅事件: %s", ctx.MixedMsg.FromUserName)
-	responseText(ctx, SubScribeResponse)
+	responseText(ctx, CONFIG.SubscribeMessage)
 }

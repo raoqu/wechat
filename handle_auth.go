@@ -1,9 +1,9 @@
 package main
 
 import (
- 	"encoding/json"
 	"crypto/rand"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -42,7 +42,9 @@ func randomState() string {
 func AuthURL(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
 	scope := q.Get("scope") // base: snsapi_base, userinfo: snsapi_userinfo
-	if scope == "" { scope = "base" }
+	if scope == "" {
+		scope = "base"
+	}
 	redirectTo := q.Get("redirect")
 	if !strings.HasPrefix(redirectTo, "/") && !strings.HasPrefix(redirectTo, "http") {
 		redirectTo = "/"
@@ -58,8 +60,8 @@ func AuthURL(w http.ResponseWriter, r *http.Request) {
 
 	authURL := fmt.Sprintf(
 		"https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=code&scope=%s&state=%s#wechat_redirect",
-		url.QueryEscape(wxAppId),
-		url.QueryEscape(RedirectURI+"?redirect="+url.QueryEscape(redirectTo)),
+		url.QueryEscape(CONFIG.AppID),
+		url.QueryEscape(CONFIG.RedirectURI+"?redirect="+url.QueryEscape(redirectTo)),
 		url.QueryEscape(realScope),
 		url.QueryEscape(state),
 	)
@@ -73,7 +75,9 @@ func AuthCallback(w http.ResponseWriter, r *http.Request) {
 	code := q.Get("code")
 	state := q.Get("state")
 	redirectTo := q.Get("redirect")
-	if redirectTo == "" { redirectTo = "/" }
+	if redirectTo == "" {
+		redirectTo = "/"
+	}
 
 	if code == "" || !stateStore.Verify(state) {
 		http.Error(w, "invalid code/state", http.StatusBadRequest)
@@ -83,8 +87,8 @@ func AuthCallback(w http.ResponseWriter, r *http.Request) {
 	// 1) 用 code 换取 access_token / openid
 	tokenAPI := fmt.Sprintf(
 		"https://api.weixin.qq.com/sns/oauth2/access_token?appid=%s&secret=%s&code=%s&grant_type=authorization_code",
-		url.QueryEscape(wxAppId),
-		url.QueryEscape(wxAppSecret),
+		url.QueryEscape(CONFIG.AppID),
+		url.QueryEscape(CONFIG.AppSecret),
 		url.QueryEscape(code),
 	)
 	resp, err := http.Get(tokenAPI)
@@ -139,7 +143,7 @@ func AuthCallback(w http.ResponseWriter, r *http.Request) {
 		Name:     "site_jwt",
 		Value:    token,
 		Path:     "/",
-		Domain:   CookieDomain,
+		Domain:   CONFIG.CookieDomain,
 		Secure:   true,
 		HttpOnly: true,
 		MaxAge:   3600 * 24 * 30,

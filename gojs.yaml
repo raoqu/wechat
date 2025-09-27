@@ -1,0 +1,14 @@
+# gojs:
+#   title: gojs
+#   endpoint: config
+#   redisKey: demo
+#   server: true
+#   port: 7669
+#   webDir: ./static/gojs
+# redis:
+#   addr: 127.0.0.1:6379
+#   db: 5
+#   dbConfig: 11
+gojs: {}
+redis: {}
+mysql: {}

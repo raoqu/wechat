@@ -34,7 +34,7 @@ func SignJWT(uid int64, openid, unionid string) (string, error) {
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(JWTSecret))
+	return token.SignedString([]byte(CONFIG.JWTSecret))
 }
 
 func AuthMiddleware(next http.Handler) http.Handler {
@@ -61,7 +61,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 
 func parseJWT(token string) (*Claims, bool) {
 	t, err := jwt.ParseWithClaims(token, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(JWTSecret), nil
+		return []byte(CONFIG.JWTSecret), nil
 	})
 	if err != nil {
 		return nil, false
@@ -77,7 +77,7 @@ func SetAuthCookie(w http.ResponseWriter, token string) {
 		Name:     "site_jwt",
 		Value:    token,
 		Path:     "/",
-		Domain:   CookieDomain,
+		Domain:   CONFIG.CookieDomain,
 		Secure:   true, // 生产用 https
 		HttpOnly: true,
 		MaxAge:   3600 * 24 * 30, // 30 天
