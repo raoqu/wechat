@@ -43,9 +43,9 @@ func init() {
 	http.HandleFunc("/wx_notify", wxCallbackHandler)
 
 	// WebApp 登录相关
-	http.HandleFunc("/auth/url", AuthURL)           // 返回微信授权链接
-	http.HandleFunc("/auth/callback", AuthCallback) // 微信回调
-	http.HandleFunc("/auth/me", Me)                 // 已登录用户信息示例
+	http.HandleFunc("/auth/url", AuthURL)                         // 返回微信授权链接
+	http.HandleFunc("/auth/callback", AuthCallback)               // 微信回调
+	http.Handle("/auth/me", AuthMiddleware(http.HandlerFunc(Me))) // 已登录用户信息示例
 
 }
 
